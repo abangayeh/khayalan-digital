@@ -7,11 +7,10 @@
 <style>
 :root{
   --ink:#17243b;--muted:#78869c;--line:#e4eaf2;--paper:#f5f7fb;
-  --white:#fff;--navy:#101b31;--navy2:#172640;--cyan:#56e0d0;
-  --blue:#6e8cff;--purple:#a78bfa;--orange:#ffb66d;
+  --white:#fff;--navy:#101b31;--cyan:#56e0d0;--blue:#6e8cff;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 Inter,Arial,sans-serif}
+body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 Arial,sans-serif}
 button,input{font:inherit}
 button{cursor:pointer}
 .app{min-height:100vh;display:grid;grid-template-columns:230px minmax(0,1fr)}
@@ -35,24 +34,17 @@ h1{font-size:clamp(23px,3vw,31px);letter-spacing:-.8px;margin:4px 0}
 .pill{background:#fff;border:1px solid var(--line);padding:9px 13px;border-radius:30px;color:#63738b;font-size:12px}
 .profile{width:38px;height:38px;border-radius:50%;background:#dce8f8;display:grid;place-items:center;font-weight:800;color:#425a80}
 .hero{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(250px,.8fr);gap:18px;margin-bottom:20px}
-.officecard{border-radius:20px;overflow:hidden;background:linear-gradient(135deg,#13213a,#1d3150);color:white;min-height:360px;position:relative;box-shadow:0 16px 35px #17243b15}
+.officecard{border-radius:20px;overflow:hidden;background:linear-gradient(135deg,#13213a,#1d3150);color:white;min-height:380px;position:relative;box-shadow:0 16px 35px #17243b15}
 .officehead{position:absolute;top:23px;left:25px;z-index:2}
 .officehead h2{font-size:19px;margin:0 0 5px}
 .officehead p{margin:0;color:#a9bdd7;font-size:12px}
 .live{position:absolute;right:22px;top:23px;border:1px solid #46617b;border-radius:30px;padding:7px 10px;font-size:10px;color:#83f1d8;z-index:2}
 .officeart{position:absolute;inset:70px 0 0;overflow:hidden}
-.glow{position:absolute;width:260px;height:180px;background:#54dcca22;filter:blur(35px);left:35%;top:25%}
-.floor{position:absolute;width:76%;height:68%;left:12%;top:17%;transform:rotateX(58deg) rotateZ(-35deg);border-radius:20px;background:linear-gradient(135deg,#d8e6f1,#9fb7d0);border:8px solid #526b88;box-shadow:0 25px 0 #0c1526;transform-style:preserve-3d}
-.floor:before{content:"";position:absolute;inset:8%;border:2px solid #7994b0;border-radius:12px;background:repeating-linear-gradient(0deg,transparent 0 48px,#8da8c022 49px 50px),repeating-linear-gradient(90deg,transparent 0 48px,#8da8c022 49px 50px)}
-.room{position:absolute;width:37%;height:40%;border-radius:10px;background:#f6f9fc;border:4px solid #7f9ab6;box-shadow:0 10px 0 #718aa5;display:flex;align-items:center;justify-content:center}
-.room.one{left:9%;top:8%}.room.two{right:9%;top:8%}.room.three{left:9%;bottom:8%}.room.four{right:9%;bottom:8%}
-.desk{width:65%;height:38%;background:#7d91a9;border-radius:7px;position:relative;box-shadow:0 5px 0 #5e728b}
-.monitor{position:absolute;width:42%;height:45%;background:#172740;border:3px solid #a8c0d8;border-radius:4px;left:29%;top:-30%}
-.monitor:after{content:"";display:block;width:70%;height:3px;background:var(--cyan);margin:35% auto}
-.chair{position:absolute;width:24%;height:22%;background:#8b9db3;border-radius:5px;bottom:-23%;left:38%}
-.person{position:absolute;width:25px;height:25px;border-radius:50%;background:#ffd6b6;border:4px solid var(--person);top:-40%;left:38%;box-shadow:0 20px 0 -3px var(--person)}
-.roomlabel{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:8px;font-weight:800;color:#52657c;letter-spacing:.5px}
-.artbadge{position:absolute;z-index:3;border:1px solid #49627d;background:#172943dd;border-radius:12px;padding:9px 12px;color:#d9e8f8;font-size:11px;box-shadow:0 8px 20px #0002}
+#office3d{display:block;width:100%;height:100%;touch-action:none}
+.office-controls{position:absolute;z-index:5;right:14px;top:8px;display:flex;gap:7px}
+.office-controls button{border:1px solid #49627d;border-radius:9px;padding:7px 10px;background:#172943dd;color:#eaf2ff;font-size:11px}
+.office-controls button:hover{background:#29415f}
+.artbadge{position:absolute;z-index:3;border:1px solid #49627d;background:#172943dd;border-radius:12px;padding:9px 12px;color:#d9e8f8;font-size:11px;box-shadow:0 8px 20px #0002;pointer-events:none}
 .artbadge b{color:var(--cyan)}
 .badge1{left:6%;bottom:15%}.badge2{right:6%;bottom:10%}
 .welcome{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;flex-direction:column;justify-content:space-between}
@@ -83,13 +75,23 @@ h1{font-size:clamp(23px,3vw,31px);letter-spacing:-.8px;margin:4px 0}
 .chatpanel{display:flex;flex-direction:column}
 .chathead{display:flex;align-items:center;gap:10px}
 .chathead .avatar{width:36px;height:36px;font-size:20px}
-.chatbody{background:#f5f7fb;border-radius:12px;padding:13px;color:#66768e;font-size:12px;min-height:72px;margin:13px 0}
+.chatbody{background:#f5f7fb;border-radius:12px;padding:13px;color:#66768e;font-size:12px;min-height:72px;margin:13px 0;white-space:pre-wrap}
 .chatrow{display:flex;gap:8px}
 .chatrow input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:11px;background:#fff;outline:none}
 .chatrow input:focus{border-color:#8bd9d0}
 .chatrow button{border:0;border-radius:10px;background:var(--navy);color:#fff;padding:0 15px;font-weight:700}
-@media(max-width:1050px){.app{grid-template-columns:190px minmax(0,1fr)}.staffgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{grid-template-columns:1fr}.officecard{min-height:330px}.welcome{min-height:210px}}
-@media(max-width:700px){.app{display:block}.sidebar{padding:12px;gap:12px}.brand{padding:0}.nav{display:flex;overflow:auto}.navlabel,.sidebottom{display:none}.nav button{white-space:nowrap;width:auto;padding:9px 12px}main{padding:18px 13px}.topbar{align-items:flex-start}.topright .pill{display:none}.officecard{min-height:300px}.floor{width:90%;left:5%;height:65%;top:22%}.artbadge{font-size:9px;padding:7px}.staffgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.lower{grid-template-columns:1fr}.welcome{padding:19px}.roomlabel{font-size:6px}}
+@media(max-width:1050px){.app{grid-template-columns:190px minmax(0,1fr)}.staffgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{grid-template-columns:1fr}.officecard{min-height:350px}.welcome{min-height:210px}}
+@media(max-width:700px){
+ .app{display:block}.sidebar{padding:12px;gap:12px}.brand{padding:0}
+ .nav{display:flex;overflow:auto}.navlabel,.sidebottom{display:none}
+ .nav button{white-space:nowrap;width:auto;padding:9px 12px}
+ main{padding:18px 13px}.topbar{align-items:flex-start}.topright .pill{display:none}
+ .officecard{min-height:330px}.officehead{left:16px;top:16px}.officehead h2{font-size:16px}
+ .live{right:12px;top:14px}.office-controls{right:8px;top:5px}
+ .office-controls button{font-size:10px;padding:6px 8px}
+ .artbadge{font-size:9px;padding:7px}.staffgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .lower{grid-template-columns:1fr}.welcome{padding:19px}
+}
 </style>
 </head>
 <body>
@@ -115,7 +117,7 @@ h1{font-size:clamp(23px,3vw,31px);letter-spacing:-.8px;margin:4px 0}
   <main>
     <div class="topbar">
       <div><div class="eyebrow">KHAYALAN DIGITAL / WORKSPACE</div><h1>AI Virtual Office</h1></div>
-      <div class="topright"><div class="pill">◷ Hari ini · Workspace</div><div class="profile">KD</div></div>
+      <div class="topright"><div class="pill">◷ Workspace</div><div class="profile">KD</div></div>
     </div>
 
     <section class="hero">
@@ -123,17 +125,16 @@ h1{font-size:clamp(23px,3vw,31px);letter-spacing:-.8px;margin:4px 0}
         <div class="officehead"><h2>Welcome to the future of work.</h2><p>Kantor digital tempat manusia dan AI berkolaborasi.</p></div>
         <div class="live">● LIVE OFFICE</div>
         <div class="officeart">
-          <div class="glow"></div>
-          <div class="floor">
-            <div class="room one"><div class="desk"><div class="monitor"></div><div class="chair"></div><div class="person" style="--person:#54bfc1"></div></div><div class="roomlabel">PROJECT ROOM</div></div>
-            <div class="room two"><div class="desk"><div class="monitor"></div><div class="chair"></div><div class="person" style="--person:#6687ed"></div></div><div class="roomlabel">DEVELOPMENT</div></div>
-            <div class="room three"><div class="desk"><div class="monitor"></div><div class="chair"></div><div class="person" style="--person:#e9a45e"></div></div><div class="roomlabel">DESIGN STUDIO</div></div>
-            <div class="room four"><div class="desk"><div class="monitor"></div><div class="chair"></div><div class="person" style="--person:#a78bfa"></div></div><div class="roomlabel">INNOVATION LAB</div></div>
+          <canvas id="office3d"></canvas>
+          <div class="office-controls">
+            <button id="officeRotate" type="button">⟳ Putar kantor</button>
+            <button id="officeReset" type="button">⌂ Tampilan awal</button>
           </div>
           <div class="artbadge badge1">AI TEAM <b>· 4 STAFF</b></div>
           <div class="artbadge badge2">BUILDING <b>IDEAS → PRODUCTS</b></div>
         </div>
       </div>
+
       <div class="welcome">
         <div><div class="spark">✦</div><h2>Ide besar.<br>Eksekusi cerdas.</h2><p>Bangun website, aplikasi, dan produk digital bersama tim AI Khayalan Digital.</p></div>
         <button class="primary" onclick="document.getElementById('team').scrollIntoView({behavior:'smooth'})">Temui tim AI →</button>
@@ -159,6 +160,186 @@ h1{font-size:clamp(23px,3vw,31px);letter-spacing:-.8px;margin:4px 0}
   </main>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(() => {
+  const canvas = document.getElementById("office3d");
+  if (!canvas || !window.THREE) {
+    canvas.insertAdjacentHTML("afterend","<p style='color:white;padding:20px'>Kantor 3D gagal dimuat. Periksa koneksi internet.</p>");
+    return;
+  }
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x17243b);
+
+  const camera = new THREE.PerspectiveCamera(37, 1, 0.1, 100);
+  const defaultCamera = new THREE.Vector3(12, 11, 13);
+  camera.position.copy(defaultCamera);
+  camera.lookAt(0, 0.7, 0);
+
+  const renderer = new THREE.WebGLRenderer({canvas,antialias:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setClearColor(0x17243b);
+
+  scene.add(new THREE.HemisphereLight(0xe8f5ff,0x52637d,2.1));
+  const sunlight = new THREE.DirectionalLight(0xffffff,2.4);
+  sunlight.position.set(5,12,8);
+  scene.add(sunlight);
+
+  const office = new THREE.Group();
+  scene.add(office);
+
+  function mat(color, roughness=0.72) {
+    return new THREE.MeshStandardMaterial({color,roughness});
+  }
+  function box(w,h,d,color,x,y,z,parent=office) {
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(color));
+    mesh.position.set(x,y,z);
+    parent.add(mesh);
+    return mesh;
+  }
+
+  // Alas dan lantai
+  box(12.4,0.38,9.4,0x526985,0,-0.25,0);
+  box(12.1,0.12,9.1,0xe5edf5,0,0.0,0);
+
+  // Dinding kantor dengan bagian depan terbuka
+  box(12.1,2.8,0.18,0x91a9c4,0,1.35,-4.45);
+  box(0.18,2.8,9,0x91a9c4,-5.95,1.35,0);
+  box(0.18,2.8,9,0x91a9c4,5.95,1.35,0);
+  box(12,0.12,0.18,0x526985,0,2.75,-4.45);
+
+  // Sekat kaca rendah
+  box(0.1,1.25,3.6,0x7894af,0,0.7,0);
+  box(5.8,1.25,0.1,0x7894af,0,0.7,0);
+
+  const areas=[
+    {x:-2.9,z:-2.2,color:0x54c9bd,label:"PROJECT"},
+    {x:2.9,z:-2.2,color:0x718cff,label:"DEVELOPMENT"},
+    {x:-2.9,z:2.1,color:0xffb66d,label:"DESIGN STUDIO"},
+    {x:2.9,z:2.1,color:0xb39aff,label:"AI LAB"}
+  ];
+
+  areas.forEach((r,i)=>{
+    // Karpet ruangan
+    box(5.5,0.045,3.9,0xd4e0ec,r.x,0.09,r.z);
+
+    // Meja dan kaki
+    box(2.15,0.16,1.05,0x8b9db2,r.x,0.95,r.z);
+    [-0.82,0.82].forEach(dx=>{
+      [-0.36,0.36].forEach(dz=>{
+        box(0.1,0.82,0.1,0x536981,r.x+dx,0.52,r.z+dz);
+      });
+    });
+
+    // Monitor dan layar
+    box(1.05,0.7,0.13,0x17243b,r.x,1.38,r.z-0.25);
+    box(0.86,0.5,0.035,r.color,r.x,1.39,r.z-0.17);
+    box(0.13,0.22,0.13,0x647891,r.x,0.99,r.z-0.25);
+
+    // Kursi
+    box(0.72,0.18,0.72,0x526985,r.x,0.65,r.z+1.05);
+    box(0.72,0.68,0.15,0x526985,r.x,1.0,r.z+1.36);
+    box(0.12,0.5,0.12,0x526985,r.x,0.35,r.z+1.05);
+
+    // Karakter robot
+    const robot=new THREE.Group();
+    robot.position.set(r.x,0,r.z+1.85);
+    office.add(robot);
+
+    const body=new THREE.Mesh(
+      new THREE.CapsuleGeometry(0.32,0.48,4,8),mat(r.color)
+    );
+    body.position.y=0.78;
+    robot.add(body);
+
+    const head=new THREE.Mesh(
+      new THREE.SphereGeometry(0.31,20,16),mat(0xeaf2fa)
+    );
+    head.position.y=1.48;
+    robot.add(head);
+
+    // Visor dan mata
+    box(0.4,0.14,0.08,0x17243b,0,1.5,0.27,robot);
+    box(0.07,0.045,0.035,0x54e0d0,-0.1,1.51,0.32,robot);
+    box(0.07,0.045,0.035,0x54e0d0,0.1,1.51,0.32,robot);
+
+    // Lengan
+    box(0.16,0.55,0.16,0xeaf2fa,-0.43,0.8,0,robot);
+    box(0.16,0.55,0.16,0xeaf2fa,0.43,0.8,0,robot);
+
+    // Panel nama area
+    box(1.7,0.13,0.12,r.color,r.x,2.25,r.z-1.5);
+  });
+
+  // Tanaman sudut kantor
+  function plant(x,z){
+    box(0.55,0.45,0.55,0x8197ae,x,0.3,z);
+    const leaves=new THREE.Mesh(
+      new THREE.SphereGeometry(0.43,14,12),mat(0x58b99c)
+    );
+    leaves.position.set(x,0.9,z);
+    office.add(leaves);
+  }
+  plant(-5,3.4);
+  plant(5,3.4);
+
+  let rotation=0;
+  let autoRotate=false;
+  let dragging=false;
+  let lastX=0;
+
+  document.getElementById("officeRotate").addEventListener("click",()=>{
+    autoRotate=!autoRotate;
+    document.getElementById("officeRotate").textContent=
+      autoRotate?"Ⅱ Hentikan putaran":"⟳ Putar kantor";
+  });
+
+  document.getElementById("officeReset").addEventListener("click",()=>{
+    rotation=0;
+    office.rotation.y=0;
+    camera.position.copy(defaultCamera);
+    camera.lookAt(0,0.7,0);
+    autoRotate=false;
+    document.getElementById("officeRotate").textContent="⟳ Putar kantor";
+  });
+
+  canvas.addEventListener("pointerdown",e=>{
+    dragging=true;
+    lastX=e.clientX;
+    canvas.setPointerCapture(e.pointerId);
+  });
+  canvas.addEventListener("pointermove",e=>{
+    if(!dragging)return;
+    rotation+=(e.clientX-lastX)*0.008;
+    lastX=e.clientX;
+    office.rotation.y=rotation;
+  });
+  canvas.addEventListener("pointerup",()=>dragging=false);
+  canvas.addEventListener("pointercancel",()=>dragging=false);
+
+  function resize(){
+    const w=canvas.clientWidth,h=canvas.clientHeight;
+    if(!w||!h)return;
+    renderer.setSize(w,h,false);
+    camera.aspect=w/h;
+    camera.updateProjectionMatrix();
+  }
+  window.addEventListener("resize",resize);
+  resize();
+
+  function animate(){
+    requestAnimationFrame(animate);
+    if(autoRotate&&!dragging){
+      rotation+=0.003;
+      office.rotation.y=rotation;
+    }
+    renderer.render(scene,camera);
+  }
+  animate();
+})();
+</script>
+
 <script>
 const staff=[
  {name:"Alya",role:"Project Manager",icon:"👩‍💼",bg:"#e2f7f4",desc:"Mengatur rencana dan koordinasi proyek.",greet:"Halo! Gue Alya, Project Manager. Ceritain ide atau pekerjaan yang mau lo mulai."},
@@ -166,30 +347,41 @@ const staff=[
  {name:"Nara",role:"UI/UX Designer",icon:"👩‍🎨",bg:"#fff0df",desc:"Merancang pengalaman dan tampilan produk.",greet:"Halo! Gue Nara, UI/UX Designer. Kita bisa mulai dari ide tampilan atau pengalaman pengguna."},
  {name:"Raka",role:"AI & Product Research",icon:"🧑‍🔬",bg:"#f0e9ff",desc:"Meneliti ide dan peluang produk digital.",greet:"Hai, gue Raka. Ada ide produk yang mau kita riset dan kembangkan?"}
 ];
+
 let selected=0;
 const grid=document.getElementById("staffgrid");
+
 staff.forEach((s,i)=>{
- const card=document.createElement("button");
- card.className="staffcard"+(i===0?" selected":"");
- card.innerHTML=`<div class="stafftop"><div class="avatar" style="--bg:${s.bg}">${s.icon}</div><span class="statusdot"></span></div><h3>${s.name}</h3><p>${s.role}</p><small>● Available · Klik untuk chat</small>`;
- card.onclick=()=>choose(i);grid.appendChild(card);
+  const card=document.createElement("button");
+  card.className="staffcard"+(i===0?" selected":"");
+  card.innerHTML=`<div class="stafftop"><div class="avatar" style="--bg:${s.bg}">${s.icon}</div><span class="statusdot"></span></div><h3>${s.name}</h3><p>${s.role}</p><small>● Available · Klik untuk chat</small>`;
+  card.onclick=()=>choose(i);
+  grid.appendChild(card);
 });
+
 function choose(i){
- selected=i;
- document.querySelectorAll(".staffcard").forEach((c,n)=>c.classList.toggle("selected",n===i));
- document.getElementById("chatavatar").textContent=staff[i].icon;
- document.getElementById("chatavatar").style.setProperty("--bg",staff[i].bg);
- document.getElementById("chatname").textContent=staff[i].name+" · "+staff[i].role;
- document.getElementById("chatbody").textContent=staff[i].greet;
+  selected=i;
+  document.querySelectorAll(".staffcard").forEach((c,n)=>c.classList.toggle("selected",n===i));
+  document.getElementById("chatavatar").textContent=staff[i].icon;
+  document.getElementById("chatavatar").style.setProperty("--bg",staff[i].bg);
+  document.getElementById("chatname").textContent=staff[i].name+" · "+staff[i].role;
+  document.getElementById("chatbody").textContent=staff[i].greet;
 }
+
 function send(){
- const input=document.getElementById("message"),msg=input.value.trim();
- if(!msg)return;
- document.getElementById("chatbody").textContent="Lo: "+msg+"\n\n"+staff[selected].name+": Pesan lo sudah masuk. Chat AI sungguhan dan kolaborasi antarstaf perlu disambungkan pada tahap berikutnya.";
- input.value="";
+  const input=document.getElementById("message");
+  const msg=input.value.trim();
+  if(!msg)return;
+  document.getElementById("chatbody").textContent=
+    "Lo: "+msg+"\n\n"+staff[selected].name+
+    ": Pesan lo sudah masuk. Chat AI sungguhan dan kolaborasi antarstaf perlu disambungkan pada tahap berikutnya.";
+  input.value="";
 }
+
 document.getElementById("send").onclick=send;
-document.getElementById("message").addEventListener("keydown",e=>{if(e.key==="Enter")send()});
+document.getElementById("message").addEventListener("keydown",e=>{
+  if(e.key==="Enter")send();
+});
 </script>
 </body>
 </html>
