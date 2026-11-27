@@ -1,640 +1,262 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Khayalan Digital | AI Virtual Office</title>
-
-<style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background: #080d1b;
-    color: #eaf2ff;
-}
-
-.app {
-    display: flex;
-    min-height: 100vh;
-}
-
-/* SIDEBAR */
-
-.sidebar {
-    width: 230px;
-    background: #10182b;
-    border-right: 1px solid #263653;
-    padding: 24px 16px;
-}
-
-.logo {
-    font-size: 22px;
-    font-weight: bold;
-    color: #60eaff;
-    margin-bottom: 8px;
-}
-
-.subtitle {
-    font-size: 11px;
-    color: #7e91b5;
-    margin-bottom: 35px;
-}
-
-.menu-title {
-    font-size: 10px;
-    color: #657797;
-    margin: 25px 10px 10px;
-    letter-spacing: 2px;
-}
-
-.menu button {
-    width: 100%;
-    background: transparent;
-    border: 0;
-    color: #a9b8d4;
-    text-align: left;
-    padding: 13px;
-    border-radius: 10px;
-    margin-bottom: 6px;
-    cursor: pointer;
-    font-size: 13px;
-}
-
-.menu button.active,
-.menu button:hover {
-    background: #20334f;
-    color: #60eaff;
-}
-
-.company {
-    margin-top: 45px;
-    padding: 14px;
-    border: 1px solid #263653;
-    border-radius: 12px;
-    font-size: 12px;
-    color: #91a5c9;
-}
-
-/* MAIN */
-
-.main {
-    flex: 1;
-    min-width: 0;
-    padding: 25px;
-}
-
-.topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.topbar h1 {
-    font-size: 24px;
-}
-
-.topbar p {
-    color: #7e91b5;
-    font-size: 12px;
-    margin-top: 6px;
-}
-
-.status {
-    background: #123b36;
-    color: #60f0b0;
-    padding: 10px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-}
-
-/* STATISTICS */
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    margin-bottom: 25px;
-}
-
-.stat {
-    background: #111b30;
-    border: 1px solid #263653;
-    padding: 20px;
-    border-radius: 14px;
-}
-
-.stat span {
-    color: #8194b5;
-    font-size: 12px;
-}
-
-.stat h2 {
-    font-size: 26px;
-    margin-top: 12px;
-    color: #60eaff;
-}
-
-/* OFFICE */
-
-.office-section {
-    background: #111b30;
-    border: 1px solid #263653;
-    border-radius: 18px;
-    padding: 20px;
-}
-
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.section-header h2 {
-    font-size: 18px;
-}
-
-.section-header span {
-    color: #7e91b5;
-    font-size: 11px;
-}
-
-.office {
-    background:
-        radial-gradient(ellipse at center, #243d5c 0%, #111c31 75%);
-    border-radius: 14px;
-    padding: 25px;
-    min-height: 440px;
-    overflow: hidden;
-}
-
-.office-label {
-    text-align: center;
-    color: #60eaff;
-    font-size: 12px;
-    letter-spacing: 3px;
-    margin-bottom: 20px;
-}
-
-.rooms {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-    max-width: 750px;
-    margin: auto;
-    transform: perspective(900px) rotateX(8deg);
-}
-
-.room {
-    min-height: 155px;
-    background: #1a2c46;
-    border: 2px solid #3d638a;
-    border-radius: 12px;
-    padding: 15px;
-    cursor: pointer;
-    transition: 0.2s;
-    box-shadow: 0 8px 0 #0b1324;
-}
-
-.room:hover {
-    border-color: #60eaff;
-    transform: translateY(-4px);
-    box-shadow: 0 12px 0 #0b1324;
-}
-
-.room h3 {
-    font-size: 13px;
-    color: #b9d8ff;
-}
-
-.room p {
-    font-size: 10px;
-    color: #7e91b5;
-    margin-top: 5px;
-}
-
-.character {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 22px;
-}
-
-.avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: #263e61;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 27px;
-    border: 1px solid #547ba5;
-}
-
-.character-name {
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.character-role {
-    font-size: 10px;
-    color: #8fa7ca;
-    margin-top: 5px;
-}
-
-.room-status {
-    margin-left: auto;
-    font-size: 10px;
-    color: #60f0b0;
-}
-
-/* EMPLOYEE PANEL */
-
-.employee-section {
-    margin-top: 25px;
-}
-
-.employee-section h2 {
-    font-size: 18px;
-    margin-bottom: 15px;
-}
-
-.employees {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-}
-
-.employee {
-    background: #111b30;
-    border: 1px solid #263653;
-    border-radius: 12px;
-    padding: 16px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.employee:hover {
-    border-color: #60eaff;
-}
-
-.employee .avatar {
-    margin: auto auto 12px;
-}
-
-.employee h3 {
-    font-size: 12px;
-}
-
-.employee p {
-    color: #7e91b5;
-    font-size: 10px;
-    margin-top: 6px;
-}
-
-.chat-panel {
-    margin-top: 25px;
-    background: #111b30;
-    border: 1px solid #263653;
-    border-radius: 14px;
-    padding: 20px;
-}
-
-.chat-panel h2 {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.chat-panel p {
-    font-size: 12px;
-    color: #91a5c9;
-    line-height: 1.7;
-}
-
-/* TABLET AND MOBILE */
-
-@media (max-width: 900px) {
-    .sidebar {
-        width: 180px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khayalan Digital — AI Virtual Office</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: #080d18; color: #eaf2ff;
+      font-family: Arial, sans-serif; overflow: hidden;
     }
-
-    .stats {
-        grid-template-columns: repeat(2, 1fr);
+    header {
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; border-bottom: 1px solid #243149;
+      background: #0c1423;
     }
-
-    .employees {
-        grid-template-columns: repeat(2, 1fr);
+    .brand { font-weight: 800; letter-spacing: .5px; }
+    .brand span { color: #54e3d1; }
+    .status { color: #8da3bd; font-size: 12px; }
+    main { display: grid; grid-template-columns: 1fr 300px; height: calc(100vh - 64px); }
+    #office { position: relative; min-width: 0; overflow: hidden; }
+    #scene { width: 100%; height: 100%; display: block; }
+    .hint {
+      position: absolute; left: 16px; bottom: 14px; padding: 9px 12px;
+      border: 1px solid #263850; border-radius: 10px;
+      background: #101a2bdc; color: #9fb2ca; font-size: 12px;
     }
-
-    .main {
-        padding: 18px;
+    aside {
+      border-left: 1px solid #243149; background: #0c1423;
+      padding: 18px; overflow-y: auto;
     }
-}
-
-@media (max-width: 600px) {
-    .app {
-        display: block;
+    h2 { margin: 0 0 8px; font-size: 18px; }
+    .sub { color: #91a5bd; font-size: 12px; line-height: 1.5; }
+    .staff {
+      display: flex; align-items: center; gap: 10px; width: 100%;
+      margin-top: 10px; padding: 12px; border: 1px solid #25354d;
+      border-radius: 12px; background: #111d30; color: #eaf2ff;
+      text-align: left; cursor: pointer;
     }
-
-    .sidebar {
-        width: 100%;
-        padding: 15px;
+    .staff.active { border-color: #54e3d1; background: #142b38; }
+    .avatar { font-size: 25px; }
+    .staff small { display: block; color: #91a5bd; margin-top: 4px; }
+    .chatbox {
+      margin-top: 18px; border: 1px solid #25354d; border-radius: 12px;
+      padding: 12px; background: #101a2b;
     }
-
-    .subtitle {
-        margin-bottom: 15px;
+    #chatlog { min-height: 90px; color: #b8c8dc; font-size: 13px; line-height: 1.5; }
+    .chatrow { display: flex; gap: 6px; margin-top: 10px; }
+    input {
+      width: 100%; min-width: 0; padding: 10px; border-radius: 8px;
+      border: 1px solid #30415b; background: #080f1d; color: white;
     }
-
-    .menu {
-        display: flex;
-        overflow-x: auto;
-        gap: 5px;
+    button.send {
+      border: 0; border-radius: 8px; padding: 0 12px;
+      background: #54e3d1; color: #06201f; font-weight: bold;
     }
-
-    .menu button {
-        white-space: nowrap;
-        width: auto;
+    .tag {
+      display: inline-block; margin-top: 16px; padding: 6px 9px;
+      border-radius: 20px; background: #162b3b; color: #54e3d1; font-size: 11px;
     }
-
-    .menu-title,
-    .company {
-        display: none;
+    @media (max-width: 700px) {
+      main { grid-template-columns: 1fr; grid-template-rows: 58vh 1fr; }
+      aside { border-left: 0; border-top: 1px solid #243149; padding: 12px; }
+      header { padding: 0 12px; }
+      .status { font-size: 10px; }
+      .staff { display: inline-flex; width: auto; margin-right: 5px; }
+      .staff small { display: none; }
+      .chatbox { margin-top: 10px; }
     }
-
-    .main {
-        padding: 15px;
-    }
-
-    .topbar h1 {
-        font-size: 19px;
-    }
-
-    .office {
-        padding: 15px;
-    }
-
-    .rooms {
-        gap: 10px;
-    }
-
-    .room {
-        padding: 10px;
-        min-height: 140px;
-    }
-
-    .avatar {
-        width: 38px;
-        height: 38px;
-        font-size: 22px;
-    }
-
-    .character {
-        gap: 7px;
-    }
-
-    .room-status {
-        display: none;
-    }
-}
-</style>
+  </style>
 </head>
-
 <body>
+  <header>
+    <div class="brand">KHAYALAN <span>DIGITAL</span></div>
+    <div class="status">● AI VIRTUAL OFFICE &nbsp; | &nbsp; KHAYALAN GRUP</div>
+  </header>
 
-<div class="app">
+  <main>
+    <section id="office">
+      <canvas id="scene"></canvas>
+      <div class="hint">Pilih karakter atau ruangan untuk melihat detail.</div>
+    </section>
 
-    <aside class="sidebar">
+    <aside>
+      <h2>Virtual Office</h2>
+      <div class="sub">Kantor digital Khayalan Digital. Pilih staf AI untuk memulai percakapan.</div>
+      <div class="tag">● 4 AI STAFF</div>
 
-        <div class="logo">KHAYALAN</div>
-        <div class="subtitle">DIGITAL AI OFFICE</div>
+      <div id="stafflist"></div>
 
-        <div class="menu-title">WORKSPACE</div>
-
-        <div class="menu">
-            <button class="active">🏢 Virtual Office</button>
-            <button>📋 Projects</button>
-            <button>🤖 AI Employees</button>
-            <button>📊 Reports</button>
+      <div class="chatbox">
+        <strong id="chatname">Pilih staf AI</strong>
+        <div id="chatlog">Klik salah satu staf di atas atau karakter di dalam kantor.</div>
+        <div class="chatrow">
+          <input id="message" placeholder="Tulis pesan..." />
+          <button class="send" id="send">Kirim</button>
         </div>
-
-        <div class="menu-title">COMPANY</div>
-
-        <div class="menu">
-            <button>💼 Business</button>
-            <button>⚙️ Settings</button>
-        </div>
-
-        <div class="company">
-            <strong>Khayalan Digital</strong>
-            <br><br>
-            A technology company
-            <br>
-            by Khayalan Grup
-        </div>
-
+      </div>
     </aside>
-
-    <main class="main">
-
-        <header class="topbar">
-
-            <div>
-                <h1>Virtual Office</h1>
-                <p>Selamat datang di kantor digital Khayalan Digital.</p>
-            </div>
-
-            <div class="status">
-                ● SYSTEM ONLINE
-            </div>
-
-        </header>
-
-        <section class="stats">
-
-            <div class="stat">
-                <span>AI Employees</span>
-                <h2>04</h2>
-            </div>
-
-            <div class="stat">
-                <span>Active Projects</span>
-                <h2>00</h2>
-            </div>
-
-            <div class="stat">
-                <span>Completed Tasks</span>
-                <h2>00</h2>
-            </div>
-
-            <div class="stat">
-                <span>Office Status</span>
-                <h2>100%</h2>
-            </div>
-
-        </section>
-
-        <section class="office-section">
-
-            <div class="section-header">
-                <h2>🏢 Virtual Headquarters</h2>
-                <span>ISOMETRIC OFFICE</span>
-            </div>
-
-            <div class="office">
-
-                <div class="office-label">
-                    KHAYALAN DIGITAL
-                </div>
-
-                <div class="rooms">
-
-                    <div class="room" onclick="selectEmployee('CEO')">
-
-                        <h3>01 · CEO OFFICE</h3>
-                        <p>Executive Department</p>
-
-                        <div class="character">
-                            <div class="avatar">👨‍💼</div>
-
-                            <div>
-                                <div class="character-name">AI CEO</div>
-                                <div class="character-role">Company Director</div>
-                            </div>
-
-                            <div class="room-status">ONLINE</div>
-                        </div>
-
-                    </div>
-
-                    <div class="room" onclick="selectEmployee('Project Manager')">
-
-                        <h3>02 · PROJECT ROOM</h3>
-                        <p>Project Management</p>
-
-                        <div class="character">
-                            <div class="avatar">🤖</div>
-
-                            <div>
-                                <div class="character-name">AI Project Manager</div>
-                                <div class="character-role">Project Coordinator</div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="room" onclick="selectEmployee('Developer')">
-
-                        <h3>03 · DEVELOPMENT</h3>
-                        <p>Software Engineering</p>
-
-                        <div class="character">
-                            <div class="avatar">👨‍💻</div>
-
-                            <div>
-                                <div class="character-name">AI Developer</div>
-                                <div class="character-role">Web & App Developer</div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="room" onclick="selectEmployee('Designer')">
-
-                        <h3>04 · DESIGN STUDIO</h3>
-                        <p>Creative Department</p>
-
-                        <div class="character">
-                            <div class="avatar">🎨</div>
-
-                            <div>
-                                <div class="character-name">AI Designer</div>
-                                <div class="character-role">UI/UX Designer</div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <section class="employee-section">
-
-            <h2>🤖 AI Employees</h2>
-
-            <div class="employees">
-
-                <div class="employee" onclick="selectEmployee('CEO')">
-                    <div class="avatar">👨‍💼</div>
-                    <h3>AI CEO</h3>
-                    <p>Executive Director</p>
-                </div>
-
-                <div class="employee" onclick="selectEmployee('Project Manager')">
-                    <div class="avatar">🤖</div>
-                    <h3>AI Project Manager</h3>
-                    <p>Project Coordinator</p>
-                </div>
-
-                <div class="employee" onclick="selectEmployee('Developer')">
-                    <div class="avatar">👨‍💻</div>
-                    <h3>AI Developer</h3>
-                    <p>Web & App Developer</p>
-                </div>
-
-                <div class="employee" onclick="selectEmployee('Designer')">
-                    <div class="avatar">🎨</div>
-                    <h3>AI Designer</h3>
-                    <p>UI/UX Designer</p>
-                </div>
-
-            </div>
-
-        </section>
-
-        <section class="chat-panel">
-
-            <h2 id="chatTitle">💬 AI Office Assistant</h2>
-
-            <p id="chatMessage">
-                Pilih salah satu karyawan AI untuk melihat informasi
-                dan memulai interaksi.
-            </p>
-
-        </section>
-
-    </main>
-
-</div>
-
-<script>
-
-function selectEmployee(name) {
-
-    document.getElementById("chatTitle").innerText =
-        "💬 " + name;
-
-    document.getElementById("chatMessage").innerText =
-        "Lo memilih " + name +
-        ". Fitur interaksi AI akan kita aktifkan pada tahap berikutnya.";
-
-}
-
-</script>
-
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const staff = [
+      { name: "Alya", role: "Project Manager", icon: "👩‍💻", color: 0x55d9ca, room: "Project Room" },
+      { name: "Bima", role: "Web Developer", icon: "🤖", color: 0x658cff, room: "Development Room" },
+      { name: "Nara", role: "UI/UX Designer", icon: "👩‍🎨", color: 0xffb45e, room: "Design Room" },
+      { name: "Raka", role: "AI & Product Research", icon: "🧑‍🔬", color: 0xb58cff, room: "Innovation Lab" }
+    ];
+    let selected = 0;
+    const list = document.getElementById("stafflist");
+
+    staff.forEach((s, i) => {
+      const b = document.createElement("button");
+      b.className = "staff" + (i === 0 ? " active" : "");
+      b.innerHTML = `<span class="avatar">${s.icon}</span><span><b>${s.name}</b><small>${s.role}</small></span>`;
+      b.onclick = () => selectStaff(i);
+      list.appendChild(b);
+    });
+
+    function selectStaff(i) {
+      selected = i;
+      document.querySelectorAll(".staff").forEach((b, n) => b.classList.toggle("active", n === i));
+      document.getElementById("chatname").textContent = staff[i].name + " — " + staff[i].role;
+      document.getElementById("chatlog").textContent =
+        "Halo! Gue " + staff[i].name + ", " + staff[i].role + ". Ada yang bisa gue bantu?";
+    }
+
+    document.getElementById("send").onclick = sendMessage;
+    document.getElementById("message").addEventListener("keydown", e => {
+      if (e.key === "Enter") sendMessage();
+    });
+
+    function sendMessage() {
+      const input = document.getElementById("message");
+      const msg = input.value.trim();
+      if (!msg) return;
+      document.getElementById("chatlog").textContent =
+        "Lo: " + msg + "\n\n" + staff[selected].name +
+        ": Pesan lo sudah gue terima. Fitur AI chat akan disambungkan pada tahap berikutnya.";
+      input.value = "";
+    }
+
+    // Three.js office scene
+    const canvas = document.getElementById("scene");
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(0x080d18);
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x080d18);
+
+    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+    camera.position.set(12, 13, 15);
+    camera.lookAt(0, 0, 0);
+
+    scene.add(new THREE.HemisphereLight(0xb9d9ff, 0x243044, 2));
+    const light = new THREE.DirectionalLight(0xffffff, 2.2);
+    light.position.set(6, 12, 8);
+    scene.add(light);
+
+    const floor = new THREE.Mesh(
+      new THREE.BoxGeometry(14, 0.35, 10),
+      new THREE.MeshStandardMaterial({ color: 0x1b2a40, roughness: 0.8 })
+    );
+    floor.position.y = -0.2;
+    scene.add(floor);
+
+    // Ruangan dan sekat
+    function box(w, h, d, color, x, y, z) {
+      const mesh = new THREE.Mesh(
+        new THREE.BoxGeometry(w, h, d),
+        new THREE.MeshStandardMaterial({ color, roughness: 0.7 })
+      );
+      mesh.position.set(x, y, z);
+      scene.add(mesh);
+      return mesh;
+    }
+
+    // Dinding belakang dan sisi, menyisakan bagian depan terbuka
+    box(14, 2.8, 0.25, 0x2d4662, 0, 1.2, -5);
+    box(0.25, 2.8, 10, 0x2d4662, -7, 1.2, 0);
+    box(0.25, 2.8, 10, 0x2d4662, 7, 1.2, 0);
+    box(0.18, 2.1, 10, 0x38506a, 0, 0.9, 0);
+    box(14, 2.1, 0.18, 0x38506a, 0, 0.9, 0);
+
+    const names = ["PROJECT ROOM", "DEVELOPMENT", "DESIGN ROOM", "INNOVATION LAB"];
+    const positions = [[-3.5, 0, -2.5], [3.5, 0, -2.5], [-3.5, 0, 2.5], [3.5, 0, 2.5]];
+    const clickable = [];
+
+    positions.forEach((p, i) => {
+      // Meja
+      box(2.3, 0.18, 1.2, 0x526a86, p[0], 0.75, p[2]);
+      // Monitor
+      box(0.9, 0.65, 0.12, 0x101927, p[0], 1.2, p[2] - 0.25);
+      box(0.72, 0.45, 0.04, staff[i].color, p[0], 1.2, p[2] - 0.17);
+      // Kursi
+      box(0.65, 0.5, 0.65, 0x34445c, p[0], 0.35, p[2] + 1);
+      // Karakter sederhana: badan, kepala, dan aksen warna
+      const body = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.32, 0.42, 0.9, 12),
+        new THREE.MeshStandardMaterial({ color: staff[i].color })
+      );
+      body.position.set(p[0], 0.65, p[2] + 0.65);
+      body.userData.staffIndex = i;
+      scene.add(body);
+      clickable.push(body);
+
+      const head = new THREE.Mesh(
+        new THREE.SphereGeometry(0.32, 16, 12),
+        new THREE.MeshStandardMaterial({ color: 0xffd2ad })
+      );
+      head.position.set(p[0], 1.3, p[2] + 0.65);
+      head.userData.staffIndex = i;
+      scene.add(head);
+      clickable.push(head);
+
+      // Label ruangan
+      const labelCanvas = document.createElement("canvas");
+      labelCanvas.width = 512; labelCanvas.height = 128;
+      const ctx = labelCanvas.getContext("2d");
+      ctx.fillStyle = "#101a2b"; ctx.fillRect(0, 0, 512, 128);
+      ctx.fillStyle = "#dff8ff"; ctx.font = "bold 36px Arial";
+      ctx.textAlign = "center"; ctx.fillText(names[i], 256, 78);
+      const texture = new THREE.CanvasTexture(labelCanvas);
+      const label = new THREE.Mesh(
+        new THREE.PlaneGeometry(2.4, 0.6),
+        new THREE.MeshBasicMaterial({ map: texture, transparent: true })
+      );
+      label.position.set(p[0], 2.25, p[2] - 0.65);
+      scene.add(label);
+    });
+
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+    canvas.addEventListener("pointerdown", e => {
+      const rect = canvas.getBoundingClientRect();
+      pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+      raycaster.setFromCamera(pointer, camera);
+      const hits = raycaster.intersectObjects(clickable);
+      if (hits.length) selectStaff(hits[0].object.userData.staffIndex);
+    });
+
+    function resize() {
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+    animate();
+    selectStaff(0);
+  </script>
 </body>
 </html>
